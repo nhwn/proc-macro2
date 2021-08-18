@@ -59,6 +59,15 @@ impl TokenStream {
     pub fn is_empty(&self) -> bool {
         self.inner.len() == 0
     }
+    pub fn with_capacity(n: usize) -> Self {
+        Self { inner: Vec::with_capacity(n) }
+    }
+    pub fn len(&self) -> usize {
+        self.inner.len()
+    }
+    pub fn capacity(&self) -> usize {
+        self.inner.capacity()
+    }
 
     fn take_inner(&mut self) -> Vec<TokenTree> {
         mem::replace(&mut self.inner, Vec::new())

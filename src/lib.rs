@@ -158,6 +158,15 @@ impl TokenStream {
     pub fn is_empty(&self) -> bool {
         self.inner.is_empty()
     }
+    pub fn capacity(&self) -> usize {
+        self.inner.capacity()
+    }
+    pub fn len(&self) -> usize {
+        self.inner.len()
+    }
+    pub fn with_capacity(n: usize) -> Self {
+        TokenStream::_new(imp::TokenStream::with_capacity(n))
+    }
 }
 
 /// `TokenStream::default()` returns an empty stream,

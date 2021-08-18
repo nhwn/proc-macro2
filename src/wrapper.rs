@@ -83,6 +83,25 @@ impl TokenStream {
             TokenStream::Fallback(tts) => tts.is_empty(),
         }
     }
+    pub fn with_capacity(n: usize) -> Self {
+        if inside_proc_macro() {
+            TokenStream::Compiler(DeferredTokenStream::new(proc_macro::TokenStream::new()))
+        } else {
+            TokenStream::Fallback(fallback::TokenStream::with_capacity(n))
+        }
+    }
+    pub fn len(&self) -> usize {
+        match self {
+            TokenStream::Compiler(_tts) => 0,
+            TokenStream::Fallback(tts) => tts.len(),
+        }
+    }
+    pub fn capacity(&self) -> usize {
+        match self {
+            TokenStream::Compiler(_tts) => 0,
+            TokenStream::Fallback(tts) => tts.capacity(),
+        }
+    }
 
     fn unwrap_nightly(self) -> proc_macro::TokenStream {
         match self {
